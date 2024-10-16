@@ -1,3 +1,5 @@
+import sys
+
 # Create a game that allows players to choose between multiple characters
 # and fight against each other. The game should have a simple combat system
 # where characters can deal damage to each other. The game should also have
@@ -45,7 +47,7 @@ class Game:
         pass
 
     def exit(self):
-        """This method should allow the player to exit the game"""
+        sys.exit()
         pass
 
     
