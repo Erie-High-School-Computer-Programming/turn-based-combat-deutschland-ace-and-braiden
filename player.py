@@ -5,14 +5,15 @@ class Player:
         self.defn = defn
         self.hp = hp
         self.movelist = movelist
-        pass
+
 
     def attack(self, move, target):
-        
-        pass
+        self.move = move
+        self.target = target
+        target.hp -= 10+move.pwr+self.atk-(target.defn*2)
 
     def display_stats(self):
-        """This method should display the current health of the character"""
-        pass
+        print(self.hp)
+
 
 
