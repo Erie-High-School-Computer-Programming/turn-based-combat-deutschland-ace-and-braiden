@@ -1,53 +1,99 @@
-# Create a game that allows players to choose between multiple characters
-# and fight against each other. The game should have a simple combat system
-# where characters can deal damage to each other. The game should also have
-# a way to display the current health of each character.
+import sys
+import random
+from player import Player
 
-# The game should have turned based combat where each player takes turns
-# Players should have an attack, defense, and health stat
 
-# Combat should involve a level of randomness.
 
-# The game should have a way to display the current health of each character after each turn.
 
-# Combat should continue until one of the characters health reaches 0.
 
-# The game should have a way to display the winner of the game.
-
-# The game should have a way to restart the game.
-
-# The game should have a way to exit the game.
 
 class Game:
     def __init__(self):
-        """Initializes the game,
-        It should give the game a list of at least 4 characters to choose from
-        It should also give the game a list of moves for each character
-        It should show player a list of characters to choose from
-        and allow them to select a character,
-        then have the computer choose a character at random
-        It should randomly select a player to go first"""
-        pass
+        self.player_turn = True
+        self.player = None
+        self.computer = None
 
-    def turn(self, current_turn):
-        """This method should show the current health of both players, 
-        and allow the player to select a move to use on the opponent
-        If it is the computer player's turn, it should select a move at random"""
-        pass
+        warrior = Player("Waldo", 10, 5, 100, ["stab", "slash"], [20, 30])
+        archer = Player("Alex", 5, 3, 100, ["stab", "shoot"], [15, 25])
+        wizard = Player("Wilmoth", 5, 1, 100, ["slap", "magicmissile"], [1, 60])
+        rogue = Player("Remy", 15, 7, 200, ["stab", "rararatsputin"], [20, 80])
+
+
+
+    def turn(self):
+        if self.player_turn:
+            player_move_index = int(input("Choose a move (0: first move, 1: second move): "))
+            player_move = self.player.moves[player_move_index]
+            if player_move == "quit":
+                self.exit()
+            self.attack(player_move, self.computer)
+            self.player_turn = False
+        else:
+            computer_move = '1'
+            self.attack(computer_move, self.player)
+            self.player_turn = True
+        print(self.player.moves)
+        print(self.computer.moves)
+        self.player.hp -= 10
+        print(self.player.hp)
+        print(self.computer.hp)
+
+
+    def attack(self, move, target):
+        if move == 'q':
+            exit()
+        elif move in self.player.moves:
+            move_index = self.player.moves.index(move)
+            move_power = self.player.defn[move_index]
+            target.hp -= 10 + move_power + self.player.atk - target.defn[1]
+        else:
+            print("Invalid move selected. Please choose a valid move.")
 
     def check_winner(self):
-        """This method should check if either player's health has reached 0
-        If a player's health has reached 0, it should display the winner"""
-        pass
+        if self.player.hp <= 0:
+            print("Computer AI wins!")
+            self.playing == False
+        elif self.computer.hp <= 0:
+            print("Player wins!")
+            self.playing == False
 
     def restart(self):
-        """This method should allow the player to restart the game"""
-        pass
+        self.player.hp = 100
+        self.computer.hp = 100
+        print("Game restarted.")
 
     def exit(self):
-        """This method should allow the player to exit the game"""
-        pass
+        print("Exiting Game...")
+        print("Game Closed Successfully.")
+        sys.exit()
 
-    
+    def run(self):
+        player_choice = int(input("Choose your character (0: Waldo, 1: Alex, 2: Wilmoth, 3: Remy:) > "))
+        characters = [
+            Player("Waldo", 10, 5, 100, ["stab", "slash"], [20, 30]),
+            Player("Alex", 5, 3, 100, ["stab", "shoot"], [15, 25]),
+            Player("Wilmoth", 5, 1, 100, ["slap", "magicmissile"], [1, 60]),
+            Player("Remy", 15, 7, 200, ["stab", "rararatsputin"], [20, 80]),
+            Player("HitMan", 20, 15,  900, ["shoot","Tactical nuke"], [90,169])
+        ]
+
+        self.player = characters[player_choice]
+        characters.remove(self.player)  # Remove the player's choice from available characters
+        self.computer = random.choice(characters)
+
+
+
+        print(f"Player: {self.player.name}")
+        print(f"Computer: {self.computer.name}")
+
+        self.playing = True
+        while self.playing:
+            self.turn()
+            self.check_winner()
+
+
 def main():
-    pass
+    game = Game()
+    game.run()
+
+main()

@@ -1,17 +1,18 @@
 class Player:
-    def __init__(self):
-        """This method initializes the character
-        It should give the character a name, attack, defense, and health stat
-        It should also give the character a movelist"""
-        pass
-
-    def attack(self, move, target):
-        """This method should allow the character to attack another character using the 
-        selected move. The move should deal damage to the target character"""
-        pass
-
+    def __init__(self, name, atk, pwr, hp, moves, defn):
+        self.name = name
+        self.atk = atk
+        self.pwr = pwr
+        self.hp = hp
+        self.moves = moves
+        self.defn = defn
+ 
+def attack(self, move, target):
+    move_index = self.player.moves.index(move)
+    move_power = self.player.defn[move_index]
+    target.hp -= 10 + move_power + self.player.atk - target.defn[1]
+    
+ 
     def display_stats(self):
-        """This method should display the current health of the character"""
-        pass
-
-
+        print(self.hp)
+        
